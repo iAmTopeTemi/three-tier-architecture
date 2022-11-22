@@ -2,18 +2,18 @@
 
 resource "aws_s3_bucket" "state_bucket" {
   count = length(var.bucket_name)
-  bucket = var.bucket_name[count.index]
+  bucket = var.bucket_name[0]
 }
 
 resource "aws_s3_bucket_acl" "example" {
   count = length(var.bucket_name)
-  bucket = aws_s3_bucket.state_bucket[count.index].id
+  bucket = aws_s3_bucket.state_bucket[0].id
   acl    = "private"
 }
 
 resource "aws_s3_bucket_versioning" "versioning_example" {
   count = length(var.bucket_name)
-  bucket = aws_s3_bucket.state_bucket[count.index].id
+  bucket = aws_s3_bucket.state_bucket[0].id
   versioning_configuration {
     status = "Enabled"
   }
